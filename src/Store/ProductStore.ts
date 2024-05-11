@@ -22,6 +22,11 @@ class ProductStore {
     addProduct(product: Product) {
         this.products.push(product);
     }
+    deleteProduct(productId: number) {
+        this.products = this.products.filter(product => product.id !== productId);
+    }
+
+
 }
 
 export default new ProductStore();

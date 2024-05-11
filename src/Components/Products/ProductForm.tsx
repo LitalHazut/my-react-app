@@ -27,11 +27,19 @@ function ProductForm() {
             alert('Error adding product. Please try again.');
         }
     };
-
+    const handleDelete = async (productId: number) => {
+        try {
+            const response = await axios.delete(`http://localhost:8080/delete/${productId}`);
+            console.log(response.data); // Assuming the backend returns a message
+            // Perform any necessary UI update after successful deletion
+        } catch (error) {
+            console.error('Error deleting product:', error);
+            // Handle error
+        }
+    };
 
     return (
         <div style={{ margin: '20px' }}>
-
             <Form onFinish={handleSubmit}>
                 <Row gutter={16}>
                     <Col span={8}>

@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import ProductStore from '../../Store/ProductStore';
-import { Table } from 'antd';
+import { Button, Table, message } from 'antd';
+import axios from 'axios';
 
 const ProductList = observer(() => {
     useEffect(() => {
@@ -18,6 +19,24 @@ const ProductList = observer(() => {
 
         fetchProducts();
     }, []);
+    const handleDelete = async (productId: number) => {
+        try {
+            // Send DELETE request to backend to delete the product
+            const response = await axios.delete(`http://localhost:8080/delete/${productId}`);
+
+            // Check if deletion was successful
+            if (response.status === 200) {
+                // Update frontend after successful deletion
+                ProductStore.deleteProduct(productId); // Assuming ProductStore has a method to delete a product by ID
+                message.success('Product deleted successfully');
+            } else {
+                message.error('Failed to delete product');
+            }
+        } catch (error) {
+            console.error('Error deleting product:', error);
+            message.error('Error deleting product. Please try again.');
+        }
+    };
     const columns = [
         {
             title: 'Product Name',
@@ -35,6 +54,16 @@ const ProductList = observer(() => {
             key: 'price',
             render: (price: any) => `$${price}`,
         },
+        {
+            title: 'Actions',
+            key: 'actions',
+            render: (text: any, record: any) => (
+                <Button onClick={() => handleDelete(record.key)} >
+                    Delete
+                </Button>
+            ),
+        },
+
     ];
     const data = ProductStore.products.map(product => ({
         key: product.id,
