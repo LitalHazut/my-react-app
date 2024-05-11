@@ -30,60 +30,63 @@ function ProductForm() {
 
 
     return (
-        <Form onFinish={handleSubmit}>
-            <Row gutter={16}>
-                <Col span={8}>
-                    <Form.Item
-                        label="Name"
-                        name="name"
-                        rules={[{ required: true, message: 'Please input the product name!' }]}
-                    >
-                        <Input
-                            value={formData.name}
-                            onChange={handleChange}
+        <div style={{ margin: '20px' }}>
+
+            <Form onFinish={handleSubmit}>
+                <Row gutter={16}>
+                    <Col span={8}>
+                        <Form.Item
+                            label="Name"
                             name="name"
-                        />
-                    </Form.Item>
-                </Col>
+                            rules={[{ required: true, message: 'Please input the product name!' }]}
+                        >
+                            <Input
+                                value={formData.name}
+                                onChange={handleChange}
+                                name="name"
+                            />
+                        </Form.Item>
+                    </Col>
 
-                <Col span={8}>
-                    <Form.Item
-                        label="Quantity"
-                        name="quantity"
-                        rules={[{ required: true, message: 'Please input the quantity!' }]}
-                    >
-                        <Input
-                            type="number"
-                            value={formData.quantity}
-                            onChange={handleChange}
+                    <Col span={8}>
+                        <Form.Item
+                            label="Quantity"
                             name="quantity"
-                        />
-                    </Form.Item>
-                </Col>
+                            rules={[{ required: true, message: 'Please input the quantity!' }]}
+                        >
+                            <Input
+                                type="number"
+                                value={formData.quantity}
+                                onChange={handleChange}
+                                name="quantity"
+                            />
+                        </Form.Item>
+                    </Col>
 
-                <Col span={8}>
-                    <Form.Item
-                        label="Price"
-                        name="price"
-                        rules={[{ required: true, message: 'Please input the price!' }]}
-                    >
-                        <Input
-                            type="number"
-                            value={formData.price}
-                            onChange={handleChange}
+                    <Col span={8}>
+                        <Form.Item
+                            label="Price"
                             name="price"
-                        />
-                    </Form.Item>
-                </Col>
-            </Row>
+                            rules={[{ required: true, message: 'Please input the price!' }]}
+                        >
+                            <Input
+                                type="number"
+                                value={formData.price}
+                                onChange={handleChange}
+                                name="price"
+                            />
+                        </Form.Item>
+                    </Col>
+                </Row>
 
-            <Form.Item style={{ textAlign: 'center' }}>
-                <Button type="primary" htmlType="submit">
-                    Add Product
-                </Button>
-            </Form.Item>
-            <ProductList />
-        </Form>
+                <Form.Item style={{ textAlign: 'center' }}>
+                    <Button type="primary" htmlType="submit">
+                        Add Product
+                    </Button>
+                </Form.Item>
+                <ProductList />
+            </Form>
+        </div>
     );
 
 

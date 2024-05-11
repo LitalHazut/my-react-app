@@ -46,7 +46,10 @@ const ProductList = observer(() => {
 
 
     return (
-        <Table columns={columns} dataSource={data} />
+        <div style={{ margin: '20px' }}>
+
+            <Table columns={columns} dataSource={data} />
+        </div>
     );
 
 });
