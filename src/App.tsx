@@ -1,25 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
+import HomePageMUI from './Components/Home/HomePageMui';
+import HomePageANT from './Components/Home/HomePageAnt';
+import LoginPageMUI from './Components/Login/LoginPageMUI';
+import LoginPageANT from './Components/Login/LoginPageANT';
+import { Switch } from 'react-router-dom';
+import ProductForm from './Components/Products/ProductForm';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <Switch>
+          <Route path="/loginMUI" component={LoginPageMUI} />
+          <Route path="/loginANT" component={LoginPageANT} />
+          <Route path="/homeMUI" component={HomePageMUI} />
+          <Route exact path="/" component={ProductForm} />
+          <Route path="/homeANT" component={HomePageANT} />
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
