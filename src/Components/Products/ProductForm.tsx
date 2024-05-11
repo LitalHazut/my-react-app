@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import ProductList from './ProductList';
 import ProductStore from '../../Store/ProductStore';
+import { Form, Input, Button, Col, Row } from 'antd';
 
 function ProductForm() {
     const [formData, setFormData] = useState({
@@ -14,9 +15,7 @@ function ProductForm() {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
     const handleSubmit = async (e: any) => {
-        e.preventDefault();
         try {
-            console.log(formData);
             const response = await axios.post('http://localhost:8080/addProduct', formData);
             const newProduct = { ...formData, id: response.data.id }; // Assuming the server returns the newly created product with an id
             ProductStore.addProduct(newProduct);
@@ -31,42 +30,63 @@ function ProductForm() {
 
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label htmlFor="name">Name:</label>
-            <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-            />
+        <Form onFinish={handleSubmit}>
+            <Row gutter={16}>
+                <Col span={8}>
+                    <Form.Item
+                        label="Name"
+                        name="name"
+                        rules={[{ required: true, message: 'Please input the product name!' }]}
+                    >
+                        <Input
+                            value={formData.name}
+                            onChange={handleChange}
+                            name="name"
+                        />
+                    </Form.Item>
+                </Col>
 
-            <label htmlFor="quantity">Quantity:</label>
-            <input
-                type="number"
-                id="quantity"
-                name="quantity"
-                value={formData.quantity}
-                onChange={handleChange}
-                required
-            />
+                <Col span={8}>
+                    <Form.Item
+                        label="Quantity"
+                        name="quantity"
+                        rules={[{ required: true, message: 'Please input the quantity!' }]}
+                    >
+                        <Input
+                            type="number"
+                            value={formData.quantity}
+                            onChange={handleChange}
+                            name="quantity"
+                        />
+                    </Form.Item>
+                </Col>
 
-            <label htmlFor="price">Price:</label>
-            <input
-                type="number"
-                id="price"
-                name="price"
-                value={formData.price}
-                onChange={handleChange}
-                required
-            />
+                <Col span={8}>
+                    <Form.Item
+                        label="Price"
+                        name="price"
+                        rules={[{ required: true, message: 'Please input the price!' }]}
+                    >
+                        <Input
+                            type="number"
+                            value={formData.price}
+                            onChange={handleChange}
+                            name="price"
+                        />
+                    </Form.Item>
+                </Col>
+            </Row>
 
-            <button type="submit">Add Product</button>
+            <Form.Item style={{ textAlign: 'center' }}>
+                <Button type="primary" htmlType="submit">
+                    Add Product
+                </Button>
+            </Form.Item>
             <ProductList />
-        </form>
-
+        </Form>
     );
+
+
 }
 
 export default ProductForm;

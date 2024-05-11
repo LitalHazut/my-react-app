@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import ProductStore from '../../Store/ProductStore';
+import { Table } from 'antd';
 
 const ProductList = observer(() => {
     useEffect(() => {
@@ -17,19 +18,37 @@ const ProductList = observer(() => {
 
         fetchProducts();
     }, []);
+    const columns = [
+        {
+            title: 'Product Name',
+            dataIndex: 'name',
+            key: 'name',
+        },
+        {
+            title: 'Quantity',
+            dataIndex: 'quantity',
+            key: 'quantity',
+        },
+        {
+            title: 'Price',
+            dataIndex: 'price',
+            key: 'price',
+            render: (price: any) => `$${price}`,
+        },
+    ];
+    const data = ProductStore.products.map(product => ({
+        key: product.id,
+        name: product.name,
+        quantity: product.quantity,
+        price: product.price,
+    }));
+
+
 
     return (
-        <div>
-            <h2>Product List</h2>
-            <ul>
-                {ProductStore.products.map(product => (
-                    <li key={product.id}>
-                        {product.name} - Quantity: {product.quantity} - Price: ${product.price}
-                    </li>
-                ))}
-            </ul>
-        </div>
+        <Table columns={columns} dataSource={data} />
     );
+
 });
 
 export default ProductList;
