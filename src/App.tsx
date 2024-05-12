@@ -14,9 +14,9 @@ function App() {
       <div className="App">
         <Switch>
           <Route path="/loginMUI" component={LoginPageMUI} />
-          <Route path="/loginANT" component={LoginPageANT} />
+          <Route exact path="/" component={LoginPageANT} />
           <Route path="/homeMUI" component={HomePageMUI} />
-          <Route exact path="/" component={ProductForm} />
+          <Route path="/Products" component={ProductForm} />
           <Route path="/homeANT" component={HomePageANT} />
         </Switch>
       </div>

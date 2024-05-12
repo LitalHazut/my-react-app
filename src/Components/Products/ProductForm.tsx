@@ -3,6 +3,7 @@ import axios from 'axios';
 import ProductList from './ProductList';
 import ProductStore, { Product } from '../../Store/ProductStore';
 import { Form, Input, Button, Col, Row } from 'antd';
+import { LogoutOutlined } from '@ant-design/icons';
 
 function ProductForm() {
     const [formData, setFormData] = useState({
@@ -46,6 +47,10 @@ function ProductForm() {
     };
 
 
+
+    function handleLogout(event: any): void {
+        window.location.href = '/'
+    }
 
     return (
         <div style={{ margin: '20px' }}>
@@ -102,6 +107,9 @@ function ProductForm() {
                     </Button>
                 </Form.Item>
                 <ProductList />
+                <Button type="text" onClick={handleLogout} icon={<LogoutOutlined />}>
+                    Logout
+                </Button>
             </Form>
         </div>
     );

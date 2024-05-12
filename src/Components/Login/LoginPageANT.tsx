@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Input, Button, Typography, Row, Col } from 'antd';
+import { Input, Button, Typography, Row, Col, message } from 'antd';
+import axios from 'axios';
 
 const { Title } = Typography;
 
@@ -8,15 +9,23 @@ export const LoginPage = () => {
     const [password, setPassword] = useState('');
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    const handleLogin = () => {
-        // Perform login logic here (e.g., send credentials to server)
-        // For simplicity, just checking if username and password are not empty
-        if (username && password) {
-            setIsLoggedIn(true);
-        } else {
-            alert('Please enter username and password');
+
+    const handleLogin = async () => {
+        try {
+            const response = await axios.post('http://localhost:8080/login', {
+                username: username,
+                password: password
+            });
+            console.log('Login successful:', response.data);
+            // Redirect to /products route upon successful login
+            window.location.href = '/Products';
+        } catch (error: any) {
+            console.error('Login failed:', error.response.data);
+            // Display a popup message for login failure
+            message.error('Login failed: Invalid username or password');
         }
     };
+
 
     return (
         <div style={{ marginTop: '100px', textAlign: 'center' }}>
