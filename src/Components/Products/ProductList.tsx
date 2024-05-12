@@ -1,10 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import ProductStore from '../../Store/ProductStore';
-import { Button, Table, message } from 'antd';
+import ProductStore, { Product } from '../../Store/ProductStore';
+import { Button, Modal, Table, message } from 'antd';
 import axios from 'axios';
+import UpdateForm from './UpdateForm';
 
 const ProductList = observer(() => {
+    const [modalVisible, setModalVisible] = useState<boolean>(false);
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
     useEffect(() => {
         const fetchProducts = async () => {
             try {
@@ -37,6 +40,14 @@ const ProductList = observer(() => {
             message.error('Error deleting product. Please try again.');
         }
     };
+    const handleUpdateClick = (product: Product) => {
+        setSelectedProduct(product);
+        setModalVisible(true);
+    };
+
+    const handleUpdate = (updatedProduct: Product) => {
+        setModalVisible(false);
+    };
     const columns = [
         {
             title: 'Product Name',
@@ -52,21 +63,26 @@ const ProductList = observer(() => {
             title: 'Price',
             dataIndex: 'price',
             key: 'price',
-            render: (price: any) => `$${price}`,
+            render: (price: number) => `$${price}`,
         },
         {
-            title: 'Actions',
-            key: 'actions',
-            render: (text: any, record: any) => (
-                <Button onClick={() => handleDelete(record.key)} >
-                    Delete
-                </Button>
+            title: '',
+            key: 'delete',
+            render: (text: any, record: Product) => (
+                <Button onClick={() => handleDelete(record.id)}>Delete</Button>
             ),
         },
-
+        {
+            title: 'Update',
+            key: 'update',
+            render: (text: any, record: Product) => (
+                <Button onClick={() => handleUpdateClick(record)}>Update</Button>
+            ),
+        },
     ];
-    const data = ProductStore.products.map(product => ({
+    const data = ProductStore.products.map((product) => ({
         key: product.id,
+        id: product.id, // Include the id property
         name: product.name,
         quantity: product.quantity,
         price: product.price,
@@ -74,10 +90,18 @@ const ProductList = observer(() => {
 
 
 
+
     return (
         <div style={{ margin: '20px' }}>
-
             <Table columns={columns} dataSource={data} />
+            <Modal
+                title="Update Product"
+                visible={modalVisible}
+                onCancel={() => setModalVisible(false)}
+                footer={null}
+            >
+                {selectedProduct && <UpdateForm handleUpdate={handleUpdate} product={selectedProduct} />}
+            </Modal>
         </div>
     );
 

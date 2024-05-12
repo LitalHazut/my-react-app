@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import ProductList from './ProductList';
-import ProductStore from '../../Store/ProductStore';
+import ProductStore, { Product } from '../../Store/ProductStore';
 import { Form, Input, Button, Col, Row } from 'antd';
 
 function ProductForm() {
@@ -15,28 +15,37 @@ function ProductForm() {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
     const handleSubmit = async (e: any) => {
+        e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/addProduct', formData);
-            const newProduct = { ...formData, id: response.data.id }; // Assuming the server returns the newly created product with an id
+            // Convert quantity and price to numbers
+            const quantity = parseInt(formData.quantity);
+            const price = parseFloat(formData.price);
+
+            // Ensure quantity and price are valid numbers
+            if (isNaN(quantity) || isNaN(price)) {
+                throw new Error('Quantity and price must be valid numbers');
+            }
+
+            // Send the form data to the server
+            const response = await axios.post('http://localhost:8080/addProduct', { ...formData, quantity, price });
+
+            // Assuming the server returns the newly created product with an id
+            const newProduct: Product = { ...formData, id: response.data.id, quantity, price };
+
+            // Add the new product to the store or update the UI as needed
             ProductStore.addProduct(newProduct);
+
             // Reset form after successful submission
             setFormData({ name: '', quantity: '', price: '' });
+
             alert('Product added successfully!');
         } catch (error) {
             console.error('Error adding product:', error);
             alert('Error adding product. Please try again.');
         }
     };
-    const handleDelete = async (productId: number) => {
-        try {
-            const response = await axios.delete(`http://localhost:8080/delete/${productId}`);
-            console.log(response.data); // Assuming the backend returns a message
-            // Perform any necessary UI update after successful deletion
-        } catch (error) {
-            console.error('Error deleting product:', error);
-            // Handle error
-        }
-    };
+
+
 
     return (
         <div style={{ margin: '20px' }}>
