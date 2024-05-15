@@ -23,7 +23,7 @@ export const LoginPage = () => {
         } catch (error: any) {
             console.error('Login failed:', error.response?.data || error.message);
             // Display a popup message for login failure
-            setErrorMessage('Invalid username or password');
+            setErrorMessage('שם משתמש או סיסמה לא תקינים');
             setErrorDialogOpen(true);
         }
     };
@@ -34,29 +34,31 @@ export const LoginPage = () => {
 
     return (
         <Container maxWidth="xs">
-            <div style={{ marginTop: '100px' }}>
+            <div style={{ marginTop: '100px', direction: 'rtl' }}>
                 <Typography variant="h4" align="center" gutterBottom>
-                    Login
+                    כניסה
                 </Typography>
                 <form onSubmit={handleLogin}>
-                    <Grid container spacing={2}>
+                    <Grid container spacing={2} >
                         <Grid item xs={12}>
                             <TextField
-                                label="Username"
+                                label="שם משתמש"
                                 variant="outlined"
                                 fullWidth
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
+                                dir="ltr"
                             />
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                label="Password"
+                                label="סיסמה"
                                 type="password"
                                 variant="outlined"
                                 fullWidth
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
+                                dir="rtl"
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -66,7 +68,7 @@ export const LoginPage = () => {
                                 color="primary"
                                 fullWidth
                             >
-                                Login
+                                כניסה
                             </Button>
                         </Grid>
                     </Grid>
@@ -77,18 +79,20 @@ export const LoginPage = () => {
                 onClose={handleCloseErrorDialog}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
+                dir="rtl"
             >
-                <DialogTitle id="alert-dialog-title">Login Failed</DialogTitle>
+                <DialogTitle id="alert-dialog-title">התחברות נכשלה</DialogTitle>
                 <DialogContent>
                     <Typography variant="body1">{errorMessage}</Typography>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleCloseErrorDialog} color="primary" autoFocus>
-                        OK
+                        אישור
                     </Button>
                 </DialogActions>
             </Dialog>
         </Container>
+
     );
 };
 

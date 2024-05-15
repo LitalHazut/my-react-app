@@ -49,7 +49,7 @@ const ProductListMui: React.FC = observer(() => {
         { field: 'id', headerName: 'ID', flex: 1 },
         { field: 'name', headerName: 'Product Name', flex: 1 },
         { field: 'quantity', headerName: 'Quantity', flex: 1 },
-        { field: 'price', headerName: 'Price', flex: 1, valueFormatter: (params: any) => `$${params.value}` },
+        { field: 'price', headerName: 'Price', flex: 1 },
         {
             field: 'delete',
             headerName: 'Delete',

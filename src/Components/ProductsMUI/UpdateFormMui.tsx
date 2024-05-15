@@ -1,5 +1,6 @@
 import React from 'react';
-import { Form, Input, Button } from 'antd';
+import { Button, Grid, TextField } from '@mui/material';
+import { Formik, Form, Field } from 'formik';
 import ProductStore from '../../Store/ProductStore';
 
 interface Product {
@@ -14,8 +15,8 @@ interface UpdateFormProps {
     product: Product | null;
 }
 
-const UpdateForm: React.FC<UpdateFormProps> = ({ handleUpdate, product }) => {
-    const onFinish = async (values: Product) => {
+const UpdateFormMui: React.FC<UpdateFormProps> = ({ handleUpdate, product }) => {
+    const handleSubmit = async (values: Product) => {
         if (product) {
             const updatedData = { ...product, ...values };
 
@@ -32,8 +33,7 @@ const UpdateForm: React.FC<UpdateFormProps> = ({ handleUpdate, product }) => {
                 if (response.ok) {
                     // Call the handleUpdate callback function with the updated product data
                     handleUpdate(updatedData);
-                    ProductStore.updateProduct(updatedData)
-                    // setModalVisible(false);
+                    ProductStore.updateProduct(updatedData);
                 } else {
                     // Handle error response
                     console.error('Failed to update product');
@@ -45,24 +45,62 @@ const UpdateForm: React.FC<UpdateFormProps> = ({ handleUpdate, product }) => {
         }
     };
 
-
     return (
-        <Form onFinish={onFinish} initialValues={product
-            || undefined}>
-            <Form.Item name="name" label="Name">
-                <Input />
-            </Form.Item>
-            <Form.Item name="quantity" label="Quantity">
-                <Input type="number" />
-            </Form.Item>
-            <Form.Item name="price" label="Price">
-                <Input type="number" />
-            </Form.Item>
-            <Form.Item>
-                <Button type="primary" htmlType="submit">OK</Button>
-            </Form.Item>
-        </Form>
+        <div style={{ backgroundColor: '#FFFFFF', padding: '20px', maxWidth: '400px', margin: '80px auto' }}>
+            <Formik
+                initialValues={product || { id: 0, name: '', quantity: 0, price: 0 }}
+                onSubmit={handleSubmit}
+            >
+                <Form>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <Field name="name">
+                                {({ field }: any) => (
+                                    <TextField
+                                        {...field}
+                                        fullWidth
+                                        id="name"
+                                        label="Name"
+                                    />
+                                )}
+                            </Field>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Field name="quantity">
+                                {({ field }: any) => (
+                                    <TextField
+                                        {...field}
+                                        fullWidth
+                                        id="quantity"
+                                        label="Quantity"
+                                        type="number"
+                                    />
+                                )}
+                            </Field>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Field name="price">
+                                {({ field }: any) => (
+                                    <TextField
+                                        {...field}
+                                        fullWidth
+                                        id="price"
+                                        label="Price"
+                                        type="number"
+                                    />
+                                )}
+                            </Field>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Button type="submit" variant="contained" color="primary">
+                                OK
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </Form>
+            </Formik>
+        </div>
     );
 };
 
-export default UpdateForm;
+export default UpdateFormMui;
