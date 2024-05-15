@@ -6,17 +6,19 @@ import HomePageANT from './Components/Home/HomePageAnt';
 import LoginPageMUI from './Components/Login/LoginPageMUI';
 import LoginPageANT from './Components/Login/LoginPageANT';
 import { Switch } from 'react-router-dom';
-import ProductForm from './Components/Products/ProductForm';
+import ProductForm from './Components/ProductsANT/ProductForm';
+import ProductFormMui from './Components/ProductsMUI/ProductFormMui';
 
 function App() {
   return (
     <Router>
       <div className="App">
         <Switch>
-          <Route path="/loginMUI" component={LoginPageMUI} />
-          <Route exact path="/" component={LoginPageANT} />
+          <Route exact path="/" component={LoginPageMUI} />
+          <Route path="/loginAnt" component={LoginPageANT} />
           <Route path="/homeMUI" component={HomePageMUI} />
-          <Route path="/Products" component={ProductForm} />
+          {/* <Route path="/Products" component={ProductForm} /> */}
+          <Route path="/Products" component={ProductFormMui} />
           <Route path="/homeANT" component={HomePageANT} />
         </Switch>
       </div>
