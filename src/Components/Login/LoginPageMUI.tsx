@@ -19,7 +19,7 @@ export const LoginPage = () => {
             });
             console.log('Login successful:', response.data);
             // Redirect to /products route upon successful login
-            window.location.href = '/Products';
+            window.location.href = '/Table';
         } catch (error: any) {
             console.error('Login failed:', error.response?.data || error.message);
             // Display a popup message for login failure

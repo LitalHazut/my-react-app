@@ -8,6 +8,7 @@ import LoginPageANT from './Components/Login/LoginPageANT';
 import { Switch } from 'react-router-dom';
 import ProductForm from './Components/ProductsANT/ProductForm';
 import ProductFormMui from './Components/ProductsMUI/ProductFormMui';
+import { CustomMenu } from './Components/CustomMenu/CustomMenu';
 
 function App() {
   return (
@@ -17,8 +18,9 @@ function App() {
           <Route exact path="/" component={LoginPageMUI} />
           <Route path="/loginAnt" component={LoginPageANT} />
           <Route path="/homeMUI" component={HomePageMUI} />
-          {/* <Route path="/Products" component={ProductForm} /> */}
           <Route path="/Products" component={ProductFormMui} />
+          {/* <Route path="/Products" component={ProductForm} /> */}
+          <Route path="/Table" component={CustomMenu} />
           <Route path="/homeANT" component={HomePageANT} />
         </Switch>
       </div>

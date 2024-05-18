@@ -2,6 +2,18 @@
   text-align: center;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;700&display=swap');
+
+body {
+  font-family: 'Heebo', sans-serif;
+}
+
+/* Override Ant Design styles if necessary */
+/* Example: Override the font size of Ant Design menu */
+.ant-menu {
+  font-family: 'Heebo', sans-serif;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -32,6 +44,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
