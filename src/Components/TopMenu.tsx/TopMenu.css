@@ -1,0 +1,26 @@
+.separator::before {
+    content: "|";
+    margin-right: 5px;
+    /* Adjust as needed */
+    margin-left: 5px;
+    /* Adjust as needed */
+    color: white;
+}
+
+.separator {
+    position: relative;
+}
+
+.separator:first-child::before {
+    content: "";
+}
+
+.customDiv {
+    color: white;
+    font-size: 10px;
+    align-content: center;
+}
+
+.customDivWithMargin {
+    margin-left: 10px;
+}
